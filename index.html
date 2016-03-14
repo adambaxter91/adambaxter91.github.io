@@ -12,10 +12,11 @@
 			font-size: 24px;
 			font-weight: bold;
 			font-family: sans-serif:
+			font-c
 
 		}
 	body {
-		background-color: white; /*Setting background color on the page*/
+		background-color: #E6E6FA; /*Setting background color on the page*/
 		font-size: 24px;
 		font-weight: bold;
 		font-family: sans-serif:
@@ -30,7 +31,7 @@
 		d3.select("body").selectAll("p").data(dataset).enter().append("p").text(function(d) {return "I can count up to " + d;}).style("color",function(d){if(d > 15) {
 			return "red";
 			} else {
-				return "black";
+				return "White";
 			}
 		});
 
