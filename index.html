@@ -16,13 +16,16 @@
 
 		}
 	body {
-		background-color: #E6E6FA; /*Setting background color on the page*/
+		background-color: #E6E6FA; /*Setting background color on the page*/	
+		background-image: url("top-background.png");
+		/*background-repeat: no-repeat;*/
+		background-position: center;
 		font-size: 24px;
 		font-weight: bold;
 		font-family: sans-serif:
 	}
 	</style>
-<body background="top-background.png">
+<body >
 	<!--<h1> Adam's Home Page</h1>-->
 	<h1> Emilie's Home Page </h1>
 	<script type="text/javascript">
@@ -31,7 +34,7 @@
 		d3.select("body").selectAll("p").data(dataset).enter().append("p").text(function(d) {return "I can count up to " + d;}).style("color",function(d){if(d > 15) {
 			return "red";
 			} else {
-				return "White";
+				return "black";
 			}
 		});
 
