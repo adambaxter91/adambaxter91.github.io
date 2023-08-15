@@ -7,7 +7,7 @@
 	
 </div>
 
-<audio autoplay muted id="channel1">
+<audio autoplay id="channel1">
 	<source src="https://live-icy.dr.dk/A/A29H.mp3" type="audio/mp3">
 </audio>
 
@@ -29,7 +29,7 @@ function myFunction() {
 	const colors = ['#FF3131', '#39FF14', '#1B03A3']
 	if (count == 0){
     	let audio = radios[0]
-        audio.muted = !audio.muted;
+        // audio.muted = !audio.muted;
        	
   		document.getElementById("demo").innerText = "";
         document.getElementsByTagName('body')[0].style.background = colors[0];
