@@ -1,489 +1,60 @@
 <!DOCTYPE html>
+<html>
+<body>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<!--<title>Adam's Home Page</title>-->
-		<title> Adam's Home Page </title>
-		<script type="text/javascript" src="d3.js"></script>
-	</head>	
-	<style type="text/css">
-		 {
-			font-size: 24px;
-			font-weight: bold;
-			font-family: sans-serif:
-			font-c
-
-		}
-	body {
-		background-color: #E6E6FA; /*Setting background color on the page*/	
-		background-image: url("SF.jpg");
-		background-repeat: no-repeat;
-		/*background-image: url("giphy.gif");*/		
-		background-position: right bottom;
-		font-size: 24px;
-		font-weight: bold;
-		font-family: sans-serif:
-	}
-	</style>
-<body >
-	<!--<h1> Adam's Home Page</h1>-->
-	<h1> Adam's Home Page </h1>
-	<p><a href="https://ec2-52-35-197-46.us-west-2.compute.amazonaws.com:8888"> Jupyter here </a></p>
-	<!--<script type="text/javascript">
-		var dataset= [5, 10, 15, 20, 25];
-
-		d3.select("body").selectAll("p").data(dataset).enter().append("p").text(function(d) {return "I can count up to " + d;}).style("color",function(d){if(d > 15) {
-			return "red";
-			} else {
-				return "black";
-			}
-		});
-
-		
-
-	</script>-->
-	<div id ="Scat"></div>
-	<p><restart> Click here to restart. </restart> <pik> Click here for data from 2003! </pik><nice> Click here for data from 2015!! </nice></p>
-	<p></p>
-	<p></p>
-	<div id = "Bar"></div>
-	<p><BarCrime> Click here for all crime in SF </BarCrime> </p>
-	<p><BarFocus> Click here for all focuse crime in SF </BarFocus> </p>
-      <script type="text/javascript">
-	var w = 700;
-	var h = 500;
-	var padding = 50;
+<h1 id="demo" style="padding-top: 100px;position: absolute;text-align:center; width:100%;">Click to start the disco<br /> Put on your headphones</h1>
+<div id="splash" onclick="myFunction()" style="position:fixed;width:100%;height:100%;">
 	
-	var chart1 = d3.select("#Scat")
-		.append("svg")
-		.attr("width", w)
-		.attr("height", h);
-	var crime = [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]];
-	var yScale = d3.scale.linear()
-		.domain([0, 2500])
-		.range([h-padding, padding]);
-
-	var xScale = d3.scale.linear()
-		.domain([0, 800])
-		.range([padding, w-padding*2]);
-	
-	var rScale = d3.scale.linear()
-		.domain([0,d3.max(crime, function(d) { return d[1]; })])
-		.range([0, 15]);
-	
-
-	var xAxis = d3.svg.axis()
-		.scale(xScale)
-		.orient("bottom")
-		.ticks(5);
-			//Define Y axis
-	var yAxis = d3.svg.axis()
-		.scale(yScale)
-		.orient("left")
-		.ticks(5);
-	//Animation variables:
-	var speed = 2000 //2 seconds
-	var delayTime = 500
-	chart1.selectAll("circle")
-		.data(crime)
-		.enter()
-		.append("circle")
-		.attr("cx", function(d) {
-			//console.log(d[1])
-			return xScale(d[1]);
-		})
-		.attr("cy", function(d) {
-			//console.log(d[3])
-			return yScale(d[3]);
-		})
-		.attr("r", 5);
-
-	chart1.selectAll("text")
-			   .data(crime)
-			   .enter()
-			   .append("text")
-			   .text(function(d) {
-			   		return d[4];
-			   })
-			   .attr("x", function(d) {
-			   		return xScale(d[1]);
-			   })
-			   .attr("y", function(d) {
-			   		return yScale(d[3]);
-			   })
-			   .attr("font-family", "sans-serif")
-			   .attr("font-size", "11px")
-			   .attr("fill", "red");
-	
-	
-	chart1.append("g")
-		.attr("class", "axis")
-		.attr("transform", "translate(0," + (h - padding) + ")")
-		.call(xAxis);
-			
-			//Create Y axis
-	chart1.append("g")
-		.attr("class", "axis")
-		.attr("transform", "translate(" + padding + ",0)")
-		.call(yAxis);
-	
-	d3.select("pik")
-		.on("click", function() {
-
-	d3.json("Crime2003.txt", function(data) {
-		crime2003 = data;
-		var rScale = d3.scale.linear()
-		.domain([0, d3.max(crime2003, function(d) { return d[1]+d[3]; })])
-		.range([0, 15]);
-		
-		chart1.selectAll("circle")
-			.data(crime2003)
-			.transition()
-			.duration(speed)
-			.ease("linear")
-			.delay(function(d, i){
-				return i * delayTime;
-			})
-			.attr("cx", function(d) {
-			//console.log(d[1])
-				return xScale(d[1]);
-		})
-		.attr("cy", function(d) {
-			//console.log(d[3])
-			return yScale(d[3]);
-		})
-		.attr("r", function(d){
-			//console.log(rScale(d[1]));
-			return rScale(d[1]+d[3]);
-		});
-		
-	chart1.selectAll("text")
-			   .data(crime2003)
-			   .transition()
-			   .delay(function(d,i){
-				return i * delayTime;
-			   })
-			   .duration(speed)
-			   .ease("linear")
-			   .text(function(d) {
-			   		return d[4];
-			   })
-			   .attr("x", function(d) {
-			   		return xScale(d[1]);
-			   })
-			   .attr("y", function(d) {
-			   		return yScale(d[3]);
-			   })
-			   .attr("font-family", "sans-serif")
-			   .attr("font-size", "11px")
-			   .attr("fill", "red");
-	})});
-
-	d3.select("nice")
-		.on("click", function() {
-
-	d3.json("Crime2015.txt", function(data) {
-		crime2015 = data;
-		var rScale = d3.scale.linear()
-		.domain([0, d3.max(crime2015, function(d) { return d[1]+d[3]; })])
-		.range([0, 15]);
-		chart1.selectAll("circle")
-			.data(crime2015)
-			.transition()
-			.duration(speed)
-			.ease("linear")
-			.delay(function(d, i){
-				return i * delayTime;
-			})
-			.attr("cx", function(d) {
-			//console.log(d[1])
-				return xScale(d[1]);
-			})
-			.attr("cy", function(d) {
-			//console.log(d[3])
-				return yScale(d[3]);
-			})
-			.attr("r", function(d){
-				//console.log(rScale(d[1]));
-				return rScale(d[1]+d[3]);
-			});
-		
-	chart1.selectAll("text")
-			   .data(crime2015)
-			   .transition()
-			   .delay(function(d,i){
-				return i * delayTime;
-			   })
-			   .duration(speed)
-			   .ease("linear")
-			   .text(function(d) {
-			   		return d[4];
-			   })
-			   .attr("x", function(d) {
-			   		return xScale(d[1]);
-			   })
-			   .attr("y", function(d) {
-			   		return yScale(d[3]);
-			   })
-			   .attr("font-family", "sans-serif")
-			   .attr("font-size", "11px")
-			   .attr("fill", "red");
-	}) });
-
-
-d3.select("restart")
-		.on("click", function() {
-		crime2015 = [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]];
-		chart1.selectAll("circle")
-			.data(crime2015)
-			.transition()
-			.duration(speed)
-			.ease("linear")
-			.delay(function(d, i){
-				return i * delayTime;
-			})
-			.attr("cx", function(d) {
-			//console.log(d[1])
-				return xScale(d[1]);
-			})
-			.attr("cy", function(d) {
-			//console.log(d[3])
-				return yScale(d[3]);
-			})
-			.attr("r", 5);
-		
-	chart1.selectAll("text")
-			   .data(crime2015)
-			   .transition()
-			   .delay(function(d,i){
-				return i * delayTime;
-			   })
-			   .duration(speed)
-			   .ease("linear")
-			   .text(function(d) {
-			   		return d[4];
-			   })
-			   .attr("x", function(d) {
-			   		return xScale(d[1]);
-			   })
-			   .attr("y", function(d) {
-			   		return yScale(d[3]);
-			   })
-			   .attr("font-family", "sans-serif")
-			   .attr("font-size", "11px")
-			   .attr("fill", "red");
-	});
-
-
-//============================== BARCHART ==================================
-
-		</script>
-		<script type="text/javascript">
-			var w = 700;
-			var h = 500;
-			var padding = 3;
-			var dataset = [ 5, 10, 15, 20, 25];
-			var chart2 = d3.select("#Bar")
-				.append("svg")
-				.attr("width", w)
-				.attr("height", h);
-
-
-			d3.json("Crimes.txt", function(data) {
-				//console.log(data);
-				dataset = data;
-			var xScale = d3.scale.ordinal()
-	        		.domain(d3.range(dataset.length))
-	        		.rangeRoundBands([0, w], 0.05);
-			var yScale = d3.scale.linear()
-				.domain([0, 340000/*d3.max(dataset, function(d) { return d[1]; })*/])
-				.range([0, h]);
-			
-	
-		
-			 chart2.selectAll("rect")
-				.data(dataset)
-				.enter()
-				.append("rect")
-				.attr("x", function(d,i){
-					
-					return xScale(i);
-				})
-				.attr("y", function(d){
-					//console.log(d[1]);
-					return h-yScale(d[1]);
-				})
-				.attr("width", w / dataset.length-padding)
-				.attr("height", function(d){
-					return yScale(d[1]);
-				})
-				.attr("fill", function(d){
-					return "rgb(0,0, " + (d[1]*10)+")";
-				});
-		
-			chart2.selectAll("text")
-				.data(dataset)
-				.enter()
-				.append("text")
-				.text(function(d) {
-					return d[0];
-				})
-				.attr("x", function(d, i) {
-					return xScale(i) + xScale.rangeBand() / 2;
-				})
-				.attr("y", function(d) {
-					return h - yScale(d[1]) +14;
-				})
-				.attr("font-family","sans-serif")
-				.attr("font-size","11px")
-				.attr("fill","white")
-				.attr("text-anchor","middle");
-			});
-
-
-
-
-
-			d3.select("BarFocus")
-				.on("click", function() {
-			d3.json("Focuscrimes.txt", function(data) {
-				//console.log(data);
-				dataset = data;
-			var xScale = d3.scale.ordinal()
-	        		.domain(d3.range(dataset.length))
-	        		.rangeRoundBands([0, w], 0.05);
-			var yScale = d3.scale.linear()
-				.domain([0, 340000 /* d3.max(dataset, function(d) { return d[1]; })*/])
-				.range([0, h]);
-			
-	
-		
-			 chart2.selectAll("rect")
-				.data(dataset)
-				.transition()
-			   	.delay(function(d,i){
-					return i * delayTime;
-				})
-			   	.duration(speed)
-			   	.ease("linear")
-				.attr("x", function(d,i){
-					
-					return xScale(i);
-				})
-				.attr("y", function(d){
-					//console.log(d[1]);
-					return h-yScale(d[1]);
-				})
-				.attr("width", w / dataset.length-padding)
-				.attr("height", function(d){
-					return yScale(d[1]);
-				})
-				.attr("fill", function(d){
-					return "rgb(0,0, " + (d[1]*10)+")";
-				});
-		
-			chart2.selectAll("text")
-				.data(dataset)
-				.transition()
-			   	.delay(function(d,i){
-					return i * delayTime;
-			  	 })
-			   	.duration(speed)
-			   	.ease("linear")
-				.text(function(d) {
-					return d[0];
-				})
-				.attr("x", function(d, i) {
-					return xScale(i) + xScale.rangeBand() / 2;
-				})
-				.attr("y", function(d) {
-					return h - yScale(d[1]) +14;
-				})
-				.attr("font-family","sans-serif")
-				.attr("font-size","11px")
-				.attr("fill","white")
-				.attr("text-anchor","middle");
-			});
-
-			
-			});
-		d3.select("BarCrime")
-				.on("click", function() {
-			d3.json("Crimes.txt", function(data) {
-				//console.log(data);
-				dataset = data;
-			var xScale = d3.scale.ordinal()
-	        		.domain(d3.range(dataset.length))
-	        		.rangeRoundBands([0, w], 0.05);
-			var yScale = d3.scale.linear()
-				.domain([0, 340000 /* d3.max(dataset, function(d) { return d[1]; })*/])
-				.range([0, h]);
-			
-	
-		
-			 chart2.selectAll("rect")
-				.data(dataset)
-				.transition()
-			   	.delay(function(d,i){
-					return i * delayTime;
-				})
-			   	.duration(speed)
-			   	.ease("linear")
-				.attr("x", function(d,i){
-					
-					return xScale(i);
-				})
-				.attr("y", function(d){
-					//console.log(d[1]);
-					return h-yScale(d[1]);
-				})
-				.attr("width", w / dataset.length-padding)
-				.attr("height", function(d){
-					return yScale(d[1]);
-				})
-				.attr("fill", function(d){
-					return "rgb(0,0, " + (d[1]*10)+")";
-				});
-		
-			chart2.selectAll("text")
-				.data(dataset)
-				.transition()
-			   	.delay(function(d,i){
-					return i * delayTime;
-			  	 })
-			   	.duration(speed)
-			   	.ease("linear")
-				.text(function(d) {
-					return d[0];
-				})
-				.attr("x", function(d, i) {
-					return xScale(i) + xScale.rangeBand() / 2;
-				})
-				.attr("y", function(d) {
-					return h - yScale(d[1]) +14;
-				})
-				.attr("font-family","sans-serif")
-				.attr("font-size","11px")
-				.attr("fill","white")
-				.attr("text-anchor","middle");
-			});
-
-			
-			});
-		</script>
-	<svg width="300" height="250">
-		<rect x="0" y="80" width="80" height="80" fill="purple" stroke="gray" stroke-width="2" opacity ="0.9"/>
-		<rect x="50" y="60" width="80" height="80" fill="blue" stroke="gray" stroke-width="2" opacity ="0.8"/>
-		<rect x="100" y="40" width="80" height="80" fill="green" stroke="gray" stroke-width="2" opacity ="0.7"/>
-		<rect x="150" y="20" width="80" height="80" fill="yellow" stroke="gray" stroke-width="2" opacity ="0.6"/>
-		<rect x="200" y="0" width="80" height="80" fill="red" stroke="gray" stroke-width="2" opacity ="0.5"/>
-	</svg>
-</body> 
-	
-	 <img src="giphy.gif" width="200">
-	<!--<img src="cute.jpg" width="200"> -->
-<div>
-<text x="250" y="250">Easy-peasy</text>
 </div>
+
+<audio autoplay muted id="channel1">
+	<source src="http://live-icy.dr.dk/A/A29H.mp3" type="audio/mp3">
+</audio>
+
+<audio autoplay muted id="channel2">
+	<source src="http://live-icy.dr.dk/A/A05H.mp3" type="audio/mp3">
+</audio>
+
+<audio autoplay muted id="channel3">
+	<source src="http://live-icy.dr.dk/A/A22H.mp3" type="audio/mp3">
+</audio>
+
+<script>
+let count = 0;
+function myFunction() {
+	var audio1 = document.getElementById('channel1');
+    var audio2 = document.getElementById('channel2');
+    var audio3 = document.getElementById('channel3');
+	const radios = [audio1, audio2, audio3]
+	const colors = ['#FF3131', '#39FF14', '#1B03A3']
+	if (count == 0){
+    	let audio = radios[0]
+        audio.muted = !audio.muted;
+       	
+  		document.getElementById("demo").innerText = "";
+        document.getElementsByTagName('body')[0].style.background = colors[0];
+	}
+    else if (count%3==0){
+    	let audio_pre = radios[(count-1)%3]
+    	let audio = radios[count%3]
+        audio_pre.muted = !audio_pre.muted;
+        audio.muted = !audio.muted;
+       	
+  		document.getElementById("demo").style.color = "blue";
+        document.getElementsByTagName('body')[0].style.background = colors[count%3];
+    }
+    else{
+    	let audio_pre = radios[(count%3)-1]
+    	let audio = radios[count%3]
+        audio_pre.muted = !audio_pre.muted;
+        audio.muted = !audio.muted;
+    	document.getElementById("demo").style.color = "red";
+        document.getElementsByTagName('body')[0].style.background = colors[count%3];
+    }
+    count++;
+}
+
+</script>
+
+</body>
 </html>
