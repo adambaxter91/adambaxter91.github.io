@@ -32,7 +32,8 @@ function myFunction() {
 	const colors = ['#FF3131', '#39FF14', '#1B03A3']
     const websites = ["https://live-icy.dr.dk/A/A29H.mp3", "https://live-icy.dr.dk/A/A05H.mp3","https://live-icy.dr.dk/A/A22H.mp3"]
 	if (count == 0){
-    	let audio = radios[0]
+    	// let audio = radios[0]
+	document.getElementById("channel1").src= websites[0]
         // audio.muted = !audio.muted;
        	
   		document.getElementById("demo").innerText = "";
@@ -48,8 +49,8 @@ function myFunction() {
     //     document.getElementsByTagName('body')[0].style.background = colors[count%3];
     // }
     else{
-    	let audio_pre = radios[(count%3)-1]
-    	let audio = radios[count%3]
+    	// let audio_pre = radios[(count%3)-1]
+    	// let audio = radios[count%3]
         document.getElementById("channel1").src= websites[count%3]
         // audio_pre.muted = !audio_pre.muted;
         // audio.muted = !audio.muted;
